@@ -751,6 +751,10 @@ void OLEDDisplay::setTextAlignment(OLEDDISPLAY_TEXT_ALIGNMENT textAlignment) {
 }
 
 void OLEDDisplay::setFont(const uint8_t *fontData) {
+  if(this->fontData == fontData){
+    return;
+  }
+  
   this->fontData = fontData;
   // New font, so must recalculate. Whatever was there is gone at next print.
   setLogBuffer();
