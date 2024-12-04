@@ -70,6 +70,7 @@ private:
 #define DEBUG_OLEDDISPLAY(...)
 #endif
 
+#define OLEDDISPLAY_REDUCE_MEMORY
 // Use DOUBLE BUFFERING by default
 #ifndef OLEDDISPLAY_REDUCE_MEMORY
 #define OLEDDISPLAY_DOUBLE_BUFFER
@@ -342,6 +343,9 @@ class OLEDDisplay : public Stream {
     size_t write(uint8_t c);
     size_t write(const char* s);
 
+    bool isArduino(){return _isArduino;};
+    bool isDoubleBuffer(){return _isDoubleBuffer;};
+
     // Implement needed function to be compatible with Stream class
 #ifdef __MBED__
 	int _putc(int c);
@@ -349,11 +353,14 @@ class OLEDDisplay : public Stream {
 #endif
 
 
-    uint8_t            *buffer;
+    uint8_t            *buffer; // buffer[-1] == 0x40 as a control bit?
 
     #ifdef OLEDDISPLAY_DOUBLE_BUFFER
     uint8_t            *buffer_back;
     #endif
+
+    bool                _isArduino = false;
+    bool                _isDoubleBuffer = false;
 
   protected:
 

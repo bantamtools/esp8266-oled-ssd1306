@@ -97,6 +97,12 @@ bool OLEDDisplay::allocateBuffer() {
 }
 
 bool OLEDDisplay::init() {
+#ifdef ARDUINO
+  _isArduino = true;
+#endif
+#ifdef OLEDDISPLAY_DOUBLE_BUFFER
+  _isDoubleBuffer = true;
+#endif
 
   BufferOffset = getBufferOffset();
 
